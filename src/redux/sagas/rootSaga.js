@@ -1,20 +1,15 @@
-import { call, takeLatest, put } from "redux-saga/effects"
+import { call, take, put, apply } from "redux-saga/effects"
 import API from "../../API" // TODO
 import types from "../types"
 
 // WATCHER SAGA
 export default function* getPokemonSaga() {
-  yield takeLatest(types.REQUEST_POKEMON, requestPokemonSaga)
+  yield take(types.REQUEST_POKEMON, requestPokemonSaga)
 }
 // WORKER SAGA
 function* requestPokemonSaga() {
-  const pokemon = yield call(requestPokemon)
+  const response = yield call(fetch, API.requestPokemon) // TODO - IMPLEMENT API CLASS WITH requestPokemon ENDPOINT
+  const pokemon = yield apply(response, response.json)
   yield put({ type: types.POKEMON_RETRIEVED, payload: pokemon })
 }
 
-const requestPokemon = async () => {
-  // TODO - IMPLEMENT API CLASS WITH requestPokemon ENDPOINT
-  const response = await fetch(API.requestPokemon)
-  const pokemon = await response.json()
-  return pokemon
-}
