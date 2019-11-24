@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { connect } from "react-redux"
 
-import types from "../redux/types"
+import { REQUEST_POKEMON } from "../redux/types"
 
 /* 
 Not sure if we will even want to request the pokemon here or not, but just in case
@@ -12,6 +12,7 @@ const PokemonGrid = ({ requestPokemon, pokemon }) => {
   return (
     <div align="center">
       <h2>Pokemon Array in State:</h2>
+      {/*THIS CAN ALSO BE MAPPED IN A SAGA. Not sure which is preferable right now*/}
       {pokemon.map(pokemon => {
         return pokemon.someValueHere
       })}
@@ -21,13 +22,13 @@ const PokemonGrid = ({ requestPokemon, pokemon }) => {
   )
 }
 
-const mapStateToProps = state => {
-  return { pokemon: state.pokemon }
+const mapStateToProps = ({pokemon}) => {
+  return { pokemon: pokemon }
 }
 const mapDispatchToProps = dispatch => {
   return {
     requestPokemon: () => {
-      dispatch({ type: types.REQUEST_POKEMON })
+      dispatch({ type: REQUEST_POKEMON })
     }
   }
 }
