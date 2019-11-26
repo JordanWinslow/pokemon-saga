@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { connect } from "react-redux"
 
@@ -9,9 +9,11 @@ Not sure if we will even want to request the pokemon here or not, but just in ca
 I mapped the redux dispatch to props.
 */
 const PokemonGrid = ({ getInitialPokemon, pokemon }) => {
-  if (pokemon === undefined) {
-    getInitialPokemon()
-  }
+  useEffect(() => {
+    if (pokemon.length === 0) {
+      getInitialPokemon()
+    }
+  })
   return (
     <div align="center">
       <h2>Pokemon Array in State:</h2>
